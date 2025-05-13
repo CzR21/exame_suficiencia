@@ -1,17 +1,35 @@
-import { Request, Response, NextFunction } from 'express';
+import { IncomingMessage, ServerResponse } from 'http';
 import jwt from 'jsonwebtoken';
+import { parse } from 'cookie';
 import { JWT_SECRET } from '../config/config';
 
-export function verificarAutenticacao(req: Request, res: Response, next: NextFunction) {
-  if (!req.path.includes('feedback') || req.method == 'POST') return next();
+export async function verificarAutenticacao(req: IncomingMessage, res: ServerResponse): Promise<boolean> {
+    const url = req.url || '';
+    const method = req.method || 'GET';
 
-  const token = req.cookies?.token;
-  if (!token) return res.redirect('/login');
-  
-  try {
-    jwt.verify(token, JWT_SECRET);
-    return next();
-  } catch (error) {
-    return res.redirect('/login');
-  }
+    // Permitir acesso irrestrito a POSTs e rotas fora de "feedback"
+    if (!url.includes('feedback') || method === 'POST') {
+        return true;
+    }
+
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const token = cookies['token'];
+
+    if (!token) {
+        redirecionarLogin(res);
+        return false;
+    }
+
+    try {
+        jwt.verify(token, JWT_SECRET);
+        return true;
+    } catch {
+        redirecionarLogin(res);
+        return false;
+    }
+}
+
+function redirecionarLogin(res: ServerResponse) {
+    res.writeHead(302, { Location: '/login' });
+    res.end();
 }
