@@ -63,6 +63,17 @@ cd exame_suficiencia
 Antes de rodar a aplicação, altere o arquivo `.env` para que ele aponte para o banco de dados na sua máquina local. 
 
 Abra o arquivo `.env` e configure as variáveis de ambiente para o banco de dados PostgreSQL com os seguintes valores:
+```
+DB_HOST=localhost
+DB_USER=seu_usuario
+DB_PASSWORD=sua_senha
+DB_NAME=sistema_feedback
+DB_PORT=5432
+```
+
+💡 **Importante:** Certifique-se de criar previamente o banco de dados `sistema_feedback` em sua máquina local para evitar erros na inicialização da aplicação.
+
+
 
 ### 📦 Instalar dependências do projeto
 
@@ -98,14 +109,14 @@ npm start
 ## 🧾 Modelo da Tabela (SQL)
 
 ```sql
-    CREATE TABLE IF NOT EXISTS feedbacks (
-        id SERIAL PRIMARY KEY,
-        titulo TEXT NOT NULL,
-        descricao TEXT NOT NULL,
-        tipo TEXT CHECK (tipo IN ('bug', 'sugestão', 'reclamação', 'feedback')) NOT NULL,
-        status TEXT CHECK (status IN ('recebido', 'em análise', 'em desenvolvimento', 'finalizado')) NOT NULL DEFAULT 'recebido',
-        criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+CREATE TABLE IF NOT EXISTS feedbacks (
+    id SERIAL PRIMARY KEY,
+    titulo TEXT NOT NULL,
+    descricao TEXT NOT NULL,
+    tipo TEXT CHECK (tipo IN ('bug', 'sugestão', 'reclamação', 'feedback')) NOT NULL,
+    status TEXT CHECK (status IN ('recebido', 'em análise', 'em desenvolvimento', 'finalizado')) NOT NULL DEFAULT 'recebido',
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ## 📝 Observações
