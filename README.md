@@ -71,8 +71,6 @@ DB_NAME=sistema_feedback
 DB_PORT=5432
 ```
 
-💡 **Importante:** Certifique-se de criar previamente o banco de dados `sistema_feedback` em sua máquina local para evitar erros na inicialização da aplicação.
-
 
 
 ### 📦 Instalar dependências do projeto
