@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Feedback</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container mt-5">
+    <h1 class="mb-4">Detalhes do Feedback</h1>
+
+    <div class="mb-3">
+      <p><strong>Título:</strong> <%= feedback.titulo %></p>
+      <p><strong>Descrição:</strong> <%= feedback.descricao %></p>
+      <p><strong>Tipo:</strong> <%= feedback.tipo %></p>
+      <p><strong>Status:</strong> <span class="badge bg-secondary"><%= feedback.status %></span></p>
+    </div>
+
+    <form action="/feedback/atualizar" method="POST" class="mb-4">
+      <input type="hidden" name="id" value="<%= feedback.id %>">
+      <div class="mb-3">
+        <label for="status" class="form-label">Novo Status:</label>
+        <select name="status" id="status" class="form-select">
+          <option value="recebido">Recebido</option>
+          <option value="em análise">Em Análise</option>
+          <option value="em desenvolvimento">Em Desenvolvimento</option>
+          <option value="finalizado">Finalizado</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Atualizar Status</button>
+    </form>
+
+    <a href="/feedbacks" class="btn btn-secondary">Voltar</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
